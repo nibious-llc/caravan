@@ -1,0 +1,21 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: nibious-caravan-client
+build:
+  artifacts:
+  - image: dev.local/nibious/caravan-client
+    context: ../../
+    docker:
+      dockerfile: test/clients/Dockerfile
+      cacheFrom:
+      # Local Docker builder replaces cache references to the artifact image with
+      # the tagged image reference, useful for caching from the previous build.
+      - dev.local/nibious/caravan
+manifests:
+  rawYaml:
+    - 1/client.yaml
+    - 1/service.yaml
+    - 2/service.yaml
+deploy:
+  kubectl: {}

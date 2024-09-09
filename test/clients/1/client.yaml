@@ -1,0 +1,11 @@
+---
+
+apiVersion: caravan.nibious.com/v1alpha1
+kind: Client
+metadata:
+  name: nibious-dev
+spec:
+  hostname: "dev"
+  clientID: "1a8a1332-cbd7-4bd3-ac10-ecff84c8c8d9"
+  secretID: "lvigYCLuOBIsj_5dVFbkIxEfZEkFek-vEsaIzsnzV2AQpim9WEOwQItdply0bYSL"
+  owner: "Nibious"

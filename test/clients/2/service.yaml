@@ -1,0 +1,47 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-2
+  namespace: caravan
+  labels:
+    nibious.com/app: "caravan-client"
+    nibious.com/client: "2"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      nibious.com/app: "caravan-client"
+      nibious.com/client: "2"
+  template:
+    metadata:
+      labels:
+        nibious.com/app: "caravan-client"
+        nibious.com/client: "2"
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: "RuntimeDefault"
+      containers:
+        - name: server
+          image: dev.local/nibious/caravan-client:8c13e13fbd62121773caefb83ac2cf6195b47762e39f4ca4b6917776bccb0fb3
+          env:
+            - name: CLIENTID
+              value:  a6327e01-e2be-4309-99a9-4b03d832ba79
+            - name: SECRET
+              value:  lviassadsfIsj_5dVFbkIxEfZEkFek-vEsaIzsnzV2AQpim9WEOwQItdply0bYSL
+            - name: ADDRESS
+              value: caravan.caravan
+            - name: SCHEME
+              value: ws
+          ports:
+            - containerPort: 8443
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10001
+            capabilities:
+              drop: ["ALL"]
+
+---
