@@ -67,6 +67,12 @@ func TunnelError(client *ClientHub, connID uuid.UUID) {
 // connection and dropping the information into the channels
 func TunnelReader(client *ClientHub, connID uuid.UUID) {
 
+	defer func() {
+		if r := recover(); r != nil {
+			log.Info().Msg("TunnelReader recovered")
+		}
+	}()
+
 	tunnel := client.ActiveConns[connID]
 	conn := tunnel.Conn
 
