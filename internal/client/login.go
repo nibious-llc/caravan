@@ -15,13 +15,13 @@ func generateLoginCredsMsg() []byte {
 	// Start the login process
 	var login_data c.IunctioClientLogin
 
-	CLIENTID := os.Getenv("CLIENTID")
-	if CLIENTID == "" {
+	CLIENTID, ok := os.LookupEnv("CLIENTID")
+	if !ok {
 		log.Panic().Msg("env var 'CLIENTID' must be set")
 	}
 
-	SECRET := os.Getenv("SECRET")
-	if SECRET == "" {
+	SECRET, ok := os.LookupEnv("SECRET")
+	if !ok {
 		log.Panic().Msg("env var 'SECRET' must be set")
 	}
 

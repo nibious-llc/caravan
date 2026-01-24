@@ -6,6 +6,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"net"
 	"net/netip"
+	"runtime"
 )
 
 // This is for the client to send login credentials
@@ -14,7 +15,12 @@ func generateTunnelDescriptions() []byte {
 	// Send information for tunnelling
 	var tunnels []c.TunnelInit
 
-	tunnels = append(tunnels, c.TunnelInit{netip.MustParseAddr("127.0.0.1"), 22})
+	if runtime.GOOS == "windows" {
+		tunnels = append(tunnels, c.TunnelInit{netip.MustParseAddr("127.0.0.1"), 5986})
+	}
+	if runtime.GOOS == "linux" {
+		tunnels = append(tunnels, c.TunnelInit{netip.MustParseAddr("127.0.0.1"), 22})
+	}
 
 	obj, err := c.MarshalObject(tunnels)
 	if err != nil {

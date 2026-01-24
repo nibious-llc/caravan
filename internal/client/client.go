@@ -36,7 +36,7 @@ func HandleConnection(client *c.ClientHub) {
 	defer ticker.Stop()
 	defer StopClient(client)
 
-	alive_counter := 2
+	alive_counter := 6
 
 	for {
 		select {
@@ -68,7 +68,10 @@ func HandleConnection(client *c.ClientHub) {
 
 			case c.PingDataMsgType:
 				client.Writer <- c.GeneratePong()
-				alive_counter++
+				alive_counter = 6
+
+			case c.PongDataMsgType:
+				alive_counter = 6
 
 			case c.RequestTunnelDescriptionsMsgType:
 				log.Debug().Msg("Tunnel Descriptions Requested")
