@@ -21,20 +21,20 @@ import (
 // EventLogHook implements the zerolog.Hook interface
 type EventLogHook struct {
 	// Add fields for your event log client here
-	// eventLogClient *eventlog.Log
+	WinLog *eventlog.Log
 }
 
 func (h *EventLogHook) Run(e *zerolog.Event, level zerolog.Level, msg string) {
-	// Extract data from the event e if needed
-	// You can also use reflection on the event's internal buffer (less performant)
-
-	// Call the specific API of your event log system
-	// switch level {
-	// case zerolog.InfoLevel:
-	//     h.eventLogClient.Info(1, msg) // Example call
-	// case zerolog.ErrorLevel:
-	//     h.eventLogClient.Error(2, msg) // Example call
-	// }
+	switch level {
+	case zerolog.InfoLevel:
+		h.WinLog.Info(3, msg)
+	case zerolog.WarnLevel:
+		h.WinLog.Warning(2, msg)
+	case zerolog.ErrorLevel:
+		h.WinLog.Error(1, msg)
+	default:
+		h.WinLog.Info(4, msg)
+	}
 }
 
 func main() {
@@ -57,7 +57,7 @@ func main() {
 
 	// Now redirect all log messages to windows event log
 	// Initialize the hook
-	logHook := &EventLogHook{}
+	logHook := &EventLogHook{WinLog: elog}
 
 	// Create a new logger and register the hook
 	log.Logger = zerolog.New(nil).Hook(logHook) // nil writer as the hook handles the output
