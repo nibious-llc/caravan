@@ -3,10 +3,8 @@ package common
 import (
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
-	"github.com/prometheus/client_model/go"
 	"github.com/rs/zerolog/log"
 	//	"k8s.io/client-go/rest"
-	"net/http"
 	//	"nibious.com/iunctio/pkg/clientset/v1alpha1"
 	//metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"encoding/json"
@@ -43,11 +41,6 @@ type ClientHub struct {
 	Hostname    string                              // The hostname
 	Namespace   string                              // What k8s namespace to put this in
 	CloseChan   chan os.Signal                      // Used to close client
-
-	// Metrics
-	MetricsChan   chan []*io_prometheus_client.MetricFamily
-	MetricsServer *http.Server
-	MetricsPort   int
 }
 
 func NewClientHub() *ClientHub {
@@ -57,7 +50,6 @@ func NewClientHub() *ClientHub {
 		Control:     make(chan int),
 		ActiveConns: make(map[uuid.UUID](IunctioActiveTunnel)),
 		CloseChan:   make(chan os.Signal, 1),
-		MetricsChan: make(chan []*io_prometheus_client.MetricFamily),
 	}
 }
 

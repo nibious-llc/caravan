@@ -63,9 +63,6 @@ func HandleConnection(client *c.ClientHub) {
 			case c.ResponseAuthenticationSuccessMsgType:
 				log.Debug().Msg("Auth successful")
 
-				log.Debug().Msg("Starting metrics")
-				initMetricsReport()
-
 			case c.PingDataMsgType:
 				client.Writer <- c.GeneratePong()
 				alive_counter = 6
@@ -88,7 +85,7 @@ func HandleConnection(client *c.ClientHub) {
 				c.CloseTunnel(client, msg.Content)
 
 			case c.RequestMetricsMsgType:
-				client.Writer <- generateMetricsReportMsg()
+				log.Debug().Msg("Invalid metrics type requested")
 
 			case c.ClientGoodbyeMessageType:
 				log.Debug().Msg("Server said goodbye")

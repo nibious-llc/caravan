@@ -3,7 +3,6 @@ package server
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"strings"
 	"time"
 
@@ -33,20 +32,18 @@ func create_service(client *c.ClientHub) {
 		ports = append(ports, port)
 	}
 
-	// Add our prometheus port
-	ports = append(ports, apiv1.ServicePort{
+	/*ports = append(ports, apiv1.ServicePort{
 		Name:       "metrics",
 		Port:       int32(client.MetricsPort),
 		TargetPort: intstr.FromInt(client.MetricsPort),
-	})
+	})*/
 
 	// Create our service description
 	service := &apiv1.Service{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: fmt.Sprintf("%s-%s", strings.ToLower(client.Namespace), strings.ToLower(client.Hostname)), //  Needs to be the name of the
 			Annotations: map[string]string{
-				"prometheus.io/scrape": "true",
-				"prometheus.io/port":   strconv.Itoa(client.MetricsPort),
+				"prometheus.io/scrape": "false",
 			},
 			Labels: map[string]string{
 				"nibious.com/app": "caravan",

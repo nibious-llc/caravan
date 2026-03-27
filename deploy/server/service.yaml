@@ -15,6 +15,8 @@ metadata:
     nibious.com/app: "caravan"
 spec:
   replicas: 1
+  imagePullSecrets:
+      - name: regcred
   selector:
     matchLabels:
       nibious.com/app: "caravan"
@@ -29,7 +31,7 @@ spec:
           type: "RuntimeDefault"
       containers:
         - name: server
-          image: dev.local/nibious/caravan
+          image: registry.nibious.com/nibious/dev_local_nibious_caravan@sha256:8dcf476ee43cd5a433374ca23cbb9157413537fc7c82f3a0f1559f8aa8ee5a5f
           ports:
             - containerPort: 8443
           securityContext:

@@ -1,6 +1,8 @@
 module github.com/nibious-llc/caravan
 
-go 1.21.4
+go 1.24.0
+
+toolchain go1.24.12
 
 require (
 	github.com/bwmarrin/discordgo v0.27.1
@@ -107,7 +109,7 @@ require (
 	golang.org/x/net v0.19.0 // indirect
 	golang.org/x/oauth2 v0.12.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sys v0.40.0 // indirect
 	golang.org/x/term v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.3.0 // indirect

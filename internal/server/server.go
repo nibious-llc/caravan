@@ -1,7 +1,6 @@
 package server
 
 import (
-	"context"
 	"fmt"
 	"github.com/google/uuid"
 
@@ -150,13 +149,6 @@ func setupTunnels(client *c.ClientHub, content []byte) bool {
 
 func closeClient(client *c.ClientHub) {
 
-	if client.MetricsServer != nil {
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-		defer cancel()
-
-		client.MetricsServer.Shutdown(ctx)
-	}
-
 	delete_service(client)
 
 	for _, tunnel := range client.ActiveConns {
@@ -277,6 +269,4 @@ func handleMetricsReport(client *c.ClientHub, msg []byte) {
 		log.Error().Err(err).Msg("[handleTunnel] Could not unmarshal object")
 		return
 	}
-
-	client.MetricsChan <- data
 }

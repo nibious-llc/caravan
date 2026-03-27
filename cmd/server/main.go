@@ -30,8 +30,6 @@ func process(con *websocket.Conn) {
 	// Build management structure
 	hub := c.NewClientHub()
 
-	hub.MetricsPort = c.HandleMetrics(hub)
-
 	// Start threads to process incoming/outgoing data, including error handling
 	go c.Error(con, hub)
 	go c.Reader(con, hub)
